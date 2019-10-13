@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>THE GREAT ESCAPE Menu</title>
+<style>
+    body {
+	background-color: black;
+	color: black;
+}
+
+    
+    
+.box {
+	width: ;
+	text-align: center;
+}
+
+
+.block {
+	display: inline-block;
+}
+
+.InsideContent {
+	display: inline-block;
+}
+
+.coin {
+	position: absolute;
+	margin-left: 3px;
+	margin-top: -3px;
+	width: 40px;
+	height: 40px;
+	background: url('https://i.imgur.com/OZChImx.png') left center;
+	animation: play 0.4s steps(6) infinite;
+}
+
+@keyframes play {
+	100% {
+		background-position: -240px;
+	}
+}
+
+#boxPane {
+	width: 500px;
+	margin: 0px auto -1px auto;
+	padding: 50px;
+	font-family: 'VT323', monospace;
+	text-align: center;
+}
+
+#menu {
+	font-size: 40px;
+	margin-left: 60px;
+	top: 20px;
+	width: 150px;
+	color: white;
+	cursor: default;
+	text-align: left;
+}
+
+.card {
+	background: grey;
+	border-radius: 50px;
+  margin-top: -50px;
+}
+
+</style>
+
+
+</head>
+<body translate="no">
+
+<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+<b>GAME MENU DEMO</b><br />
+
+
+    
+<!-- creates "NewGame", "Options", "Exit" -->
+    
+<div>
+<div class="box">
+<div class="block card">
+<div id="boxPane">
+<div data-number="1" id="coin" class="one active InsideContent coin" style=""></div>
+<div id="menu" class="InsideContent">New Game
+</div>
+</div>
+
+<div id="boxPane">
+<div data-number="2" id="coin" class="two InsideContent" style="display:none;"></div>
+<div id="menu" class="InsideContent">Options
+</div>
+</div>
+    
+<div id="boxPane">
+<div data-number="3" id="coin" class="three InsideContent" style="display:none;"></div>
+<div id="menu" class="InsideContent">Exit
+</div>
+
+<!-- TO BE IMPLEMENTED 
+<div id="boxPane">
+<div data-number="4" id="coin" class="four InsideContent" style="display:none;"></div>
+    <div id="menu" class="InsideContent"> THE GREAT ESCAPE </div> -->
+</div>
+</div>
+</div>
+</div>
+    
+    
+    
+    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+
+
+
+    
+</body>
+</html>
