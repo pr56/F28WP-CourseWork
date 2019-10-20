@@ -3,8 +3,8 @@
 class Player extends GameObject {
     constructor(master, x, y, name, level) {
         super(master, x, y, 66-20, 92-17);
-        this.image_src = "img/sprites/alienPink.png";
-        this.image_src_flipped = "img/sprites/alienPink_flipped.png";
+        this.image_src = "sprites/alienPink.png";
+        this.image_src_flipped = "sprites/alienPink_flipped.png";
         this.image = new Image();
         this.image.src = this.image_src;
 
