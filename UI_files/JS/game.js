@@ -18,6 +18,15 @@ var Animation = function(frame_set, delay) {
   };
 
 
+  //we are calculating for collision
+function getDistance(px,py,cx,cy)
+{
+    let xDistance = cx-px;
+    let yDistance = cy-py;
+
+    return Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance,2));
+}
+
 //here i should begin animation
 var player1 = {
     x: 5,
@@ -79,8 +88,15 @@ var reset = function ()
 };
 var collisionCoin = function()
 {
+    
+    if(getDistance(player1.x,player1.y,coin.x,coin.y)<player1.width)
+    {
+        reset();
+        //coin is colliding
+        coinCount++;
+    }
 //coin is colliding
-coinCount++;
+
 };
 function draw_platforms()
 {
@@ -138,6 +154,8 @@ function loop(){
     player1.draw(); 
 
     render();
+     /*getDistance(player1.x,player1.y,coin.x,coin.y);*/
+    collisionCoin();
 
      /* Up or space Key */
     if(keys[38] || keys[32]){
