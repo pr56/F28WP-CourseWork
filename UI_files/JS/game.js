@@ -4,7 +4,21 @@ var gameStarted = false; /* Game hasn't started yet*/
 var keys = [];
 var resistance = 0.8;
 var weight = 0.98;
+const SPRITE_SIZE = 16;
+var coinCount = 0;
 
+var Animation = function(frame_set, delay) {
+
+    this.count = 0;// Counts the number of game cycles since the last frame change.
+    this.delay = delay;// The number of game cycles to wait until the next frame change.
+    this.frame = 0;// The value in the sprite sheet of the sprite image / tile to display.
+    this.frame_index = 0;// The frame's index in the current animation frame set.
+    this.frame_set = frame_set;// The current animation frame set that holds sprite tile values.
+
+  };
+
+
+//here i should begin animation
 var player1 = {
     x: 5,
     y: canvas.height -20, /* positioned at bottom of screen */
@@ -22,6 +36,21 @@ var player1 = {
         context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
+
+//here i should add my sprite sheet
+
+//coin 
+var show_coin = false;
+var coin_image = new Image();
+coin_image.onload = function () 
+{
+  // show the coin image
+  show_coin = true;
+};
+
+coin_image.src = "images/coin.png";
+var coin = {};
 
 intro();
 
@@ -42,7 +71,19 @@ function start_Game(){
     }, 1000/30)  /* 30 frames per second */
 }
 
-function draw_platforms(){
+// Place the coin somewhere on the canvas randomly
+var reset = function () 
+{
+    coin.x = 32 + (Math.random() * (canvas.width - 64));
+    coin.y = 32 + (Math.random() * (canvas.height - 64));
+};
+var collisionCoin = function()
+{
+//coin is colliding
+coinCount++;
+};
+function draw_platforms()
+{
     context.fillStyle = "#4A0336";
 
     for(var i = 0; i < platforms.length; i++){ /* fill color in all platforms */
@@ -50,9 +91,53 @@ function draw_platforms(){
     }
 }
 
+
+var render = function()
+{
+    if (show_coin) 
+    {
+        context.drawImage(coin_image, coin.x, coin.y);
+    }
+
+    context.fillStyle = "black"; //changes font color
+    context.font = "24px Helvetica";//changes font style
+    context.textAlign = "left";//changes direction
+    context.textBaseline = "top";//changes text placement
+    context.fillText("Time: " + time, 20, 50);//changes exact placement of the area
+    context.fillText("coins: " + coinCount ,23, 80);
+
+  // Display game over message when timer is over
+  if(gameOver==true)
+  {
+    context.fillText("The game has ended", 200, 220);
+  }
+};
+
+//time
+var timeReady = false;
+var time = 20;
+var gameOver = false;
+var timer = function()
+{
+    timeReady = true;
+    time = time-1;
+
+    if(time <= 0)
+    {
+        clearInterval(timer);
+        gameOver = true;
+        time = 0;
+        
+    }
+}
+setInterval(timer,1000);
+
+
 function loop(){
     draw_platforms();
-    player1.draw();
+    player1.draw(); 
+
+    render();
 
      /* Up or space Key */
     if(keys[38] || keys[32]){
@@ -199,6 +284,8 @@ document.body.addEventListener("keydown", function(event){
 
       if(event.keyCode == 13 && !gameStarted){  /* The Game will start when enter is pressed*/
             start_Game();
+            timeReady = true;
+
       }
       keys[event.keyCode] = true;
 });
@@ -210,3 +297,5 @@ document.body.addEventListener("keyup", function(event){
 function clearCanvas(){
     context.clearRect(0,0,840,460);  /* clear canvas when game starts and game loops */
 }
+
+reset();
