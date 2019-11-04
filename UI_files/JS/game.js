@@ -103,6 +103,8 @@ function start_Game(){
     gameStarted = true;
     clearCanvas();
 
+    
+
     setInterval(function(){
         clearCanvas();
         loop();
@@ -379,7 +381,6 @@ function collisionCheck(player1, platform){
   } 
 
 
-
 var platforms = [];
 var platform_width = 120;
 var platform_height = 10;
@@ -426,13 +427,39 @@ platforms.push({    //Push on to platform array
     height: platform_height,
  });
 
- /* ground platform */
+ /* floor platform */
  platforms.push({
      x:0,
      y: canvas.height-5,
      width: canvas.width,
      height: platform_height
  });
+
+ //left Wall
+ platforms.push({
+    x:-10,
+    y:0,
+    width: 10,
+    height: canvas.height
+});
+
+//Right Wall
+platforms.push({
+    x:canvas.width,
+    y:0,
+    width: 10,
+    height: canvas.height
+});
+
+//Ceiling
+platforms.push({
+    x:0,
+    y:-10,
+    width:canvas.width,
+    height:platform_height
+});
+
+
 
 document.body.addEventListener("keydown", function(event){
 
