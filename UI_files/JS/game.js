@@ -5,7 +5,8 @@ var keys = [];
 var resistance = 0.8;
 var weight = 0.98;
 const SPRITE_SIZE = 16;
-var coinCount = 0;
+var coinCount_player1 = 0;
+var coinCount_player2 = 0;
 
 var Animation = function(frame_set, delay) {
 
@@ -48,6 +49,25 @@ var player1 = {
 
 
 //here i should add my sprite sheet
+
+/* Player 2 */
+var player2 = {
+    x: 100,
+    y: canvas.height -20,   // Positioned at bottom of screen 
+    width: 20,
+    height: 20,
+    speed: 5,
+    velX: 0,
+    velY: 0, 
+    color: "red",
+    jumping: false,
+    grounded: false,
+    jumpStrength: 7,
+    draw: function(){
+        context.fillStyle = this.color;
+        context.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
 
 //coin 
 var show_coin = false;
@@ -95,6 +115,13 @@ var collisionCoin = function()
         //coin is colliding
         coinCount++;
     }
+
+    if(getDistance(player2.x,player2.y,coin.x,coin.y)<player2.width)
+    {
+        reset();
+        //coin is colliding
+        coinCount_player2++;
+    }
 //coin is colliding
 
 };
@@ -120,7 +147,8 @@ var render = function()
     context.textAlign = "left";//changes direction
     context.textBaseline = "top";//changes text placement
     context.fillText("Time: " + time, 20, 50);//changes exact placement of the area
-    context.fillText("coins: " + coinCount ,23, 80);
+    context.fillText("coins by player 1: " + coinCount_player1 ,23, 80);
+    context.fillText("coins by player 2: " + coinCount_player2 ,23, 100);
 
   // Display game over message when timer is over
   if(gameOver==true)
@@ -199,7 +227,56 @@ function loop(){
         if(player1.grounded){
             player1.velY = 0;
         }
+
+                    /* PLAYER 2 */
+
+    player2.draw();
+
+    /* Up Key */
+    if(keys[87]){                        //Press 'w' to jump
+        if(!player2.jumping){
+            player2.velY = -player2.jumpStrength*2;
+            player2.jumping = true;
+        }
+    }    
+    /* Right Key */
+    if(keys[68]){                        //Press 'd' move right
+    if(player2.velX < player2.speed){    //Cant increase velocity if reached max speed 
+        player2.velX++;
+        }
     }
+    /* Left Key */    
+    if(keys[65]){                        //Press 'a' to move left
+    if(player2.velX > -player2.speed){   //Cant increase velocity if reached max speed 
+        player2.velX--;
+        }
+    }
+        
+    player2.x += player2.velX;
+    player2.y += player2.velY;
+
+    player2.velX *= resistance;          //Character can slow down 
+    player2.velY += weight;              //Control character jump height
+      
+    player2.grounded = false;
+    for(var i = 0; i < platforms.length; i++){
+        var direction = collisionCheck(player2,platforms[i]);
+
+       if (direction == "left" || direction == "right"){
+            player2.velX = 0;
+        } else if (direction == "bottom"){
+            player2.jumping = false;
+            player2.grounded = true;
+        } else if (direction == "top"){
+            player2.velY *= -1;
+            } 
+        }  
+    if(player2.grounded){
+        player2.velY = 0;
+        }
+    }
+
+    
 
     
  /**Collision Detection  - platforms & chararacter */
@@ -242,6 +319,45 @@ function loop(){
 	}
 	return collisionDirection;
 }
+
+function collisionCheck(player2, platform){
+    var vectorX2 = (player2.x + (player2.width/2)) - (platform.x + (platform.width/2));
+    var vectorY2 = (player2.y + (player2.height/2)) - (platform.y + (platform.height/2));
+    
+    var halfWidths2 = (player2.width/2) + (platform.width/2);
+    var halfHeights2 = (player2.height/2) + (platform.height/2);
+    
+    var collisionDirection2 = null;
+    
+    if(Math.abs(vectorX2) < halfWidths2 && Math.abs(vectorY2) < halfHeights2){
+    
+    
+        /**  Where the collision is happening */
+        var offsetX2 = halfWidths2 - Math.abs(vectorX2);
+        var offsetY2 = halfHeights2 - Math.abs(vectorY2);
+        if(offsetX2 < offsetY2){
+    
+            if (vectorX2 > 0){
+                collisionDirection2 = "left";
+                player2.x += offsetX2;
+                } else {
+                    collisionDirection2 = "right";
+                    player2.x -= offsetX2;
+                }
+    
+        } else {
+    
+            if (vectorY2 > 0){
+                collisionDirection2 = "top";
+                player2.y += offsetY2;
+           } else {
+                collisionDirection2 = "bottom";
+                player2.y -= offsetY2;
+            }
+        }
+    }
+        return collisionDirection2;
+  } 
 
 
 var platforms = [];
