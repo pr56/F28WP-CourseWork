@@ -5,12 +5,12 @@ body{
 }
 
 #game{
-    background: #a2c4b8;
+    background-image: url(../images/space.jpg);
     position: absolute;  
     top: 50%;
     left: 50%;  /*center of sceen*/
     margin-left: -420px;
-    margin-top: -230px
+    margin-top: -230px;
 }
 
 
