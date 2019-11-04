@@ -10,30 +10,8 @@ var coinCount_player2 = 0;
 
 var image = new Image();
 image.src = "sprites/alienPink.png";
-
 var image2 = new Image();
 image2.src = "sprites/alienGreen.png";
-
-intro();
-
-function intro(){
-   context.font = "30px Impact";
-   context.fillStyle = "#FFFFFF";
-   context.textAlign = "center";
-   context.fillText("Press Enter to Start", canvas.width/2, canvas.height/2);
-   context.fillText("Instructions", 250, 350);
-   context.fillText("Settings", 600, 350);
-}
-
-function start_Game(){
-    gameStarted = true;
-    clearCanvas();
-
-    setInterval(function(){
-        clearCanvas();
-        loop();
-    }, 1000/30)  // 30 frames per second
-}
 
 //Player 1
 var player1 = {
@@ -70,6 +48,28 @@ var player2 = {
         context.drawImage(image2, 0, 0, 35, 48, this.x, this.y, 35, 48)
     }
 }
+
+intro();
+
+function intro(){
+   context.font = "30px Impact";
+   context.fillStyle = "#FFFFFF";
+   context.textAlign = "center";
+   context.fillText("Press Enter to Start", canvas.width/2, canvas.height/2);
+   context.fillText("Instructions", 250, 350);
+   context.fillText("Settings", 600, 350);
+}
+
+function start_Game(){
+    gameStarted = true;
+    clearCanvas();
+
+    setInterval(function(){
+        clearCanvas();
+        loop();
+    }, 1000/30)  // 30 frames per second
+}
+
 
 var Animation = function(frame_set, delay) {
     this.count = 0;// Counts the number of game cycles since the last frame change.
@@ -474,12 +474,12 @@ document.body.addEventListener("keydown", function(event){
       keys[event.keyCode] = true;
 });
 
-document.body.addEventListener("keydown", function(event){  
+document.body.addEventListener("keydown", function(event){  //Instructions will prompt
     if(event.keyCode == 73)
     alert(" \t\t\t\t\t Instructions \n\n This game is all about the chase to collect the maxium number of coins. \n \t\t Player 1 \t\t\t\t\t Player 2 \n Use up arrow to jump \t\t\t Use 'W' key to jump \n Use right arrow to move right \t\t Use 'W' key to move right \n Use left arrow to move left \t\t Use 'A' key to move left ");
 })
  
-document.body.addEventListener("keydown", function(event){ 
+document.body.addEventListener("keydown", function(event){ //Setting tools will prompt
     if(event.keyCode == 83)
     alert("\t\t\t\t\t\t Settings \n\n Sound");
 })
