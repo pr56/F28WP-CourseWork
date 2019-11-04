@@ -6,6 +6,7 @@ body{
 
 #game{
     background-image: url(../images/space.jpg);
+    background-position: center center;
     position: absolute;  
     top: 50%;
     left: 50%;  /*center of sceen*/
