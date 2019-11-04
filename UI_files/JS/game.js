@@ -28,6 +28,14 @@ function getDistance(px,py,cx,cy)
     return Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance,2));
 }
 
+function getDistance(p2x,p2y,cx,cy)
+{
+    let xDistance = cx-p2x;
+    let yDistance = cy-p2y;
+
+    return Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance,2));
+}
+
 //here i should begin animation
 var player1 = {
     x: 10,
@@ -69,24 +77,6 @@ var player2 = {
 
 //here i should add my sprite sheet
 
-/* Player 2 */
-var player2 = {
-    x: 100,
-    y: canvas.height -20,   // Positioned at bottom of screen 
-    width: 20,
-    height: 20,
-    speed: 5,
-    velX: 0,
-    velY: 0, 
-    color: "red",
-    jumping: false,
-    grounded: false,
-    jumpStrength: 7,
-    draw: function(){
-        context.fillStyle = this.color;
-        context.fillRect(this.x, this.y, this.width, this.height);
-    }
-}
 
 //coin 
 var show_coin = false;
@@ -132,7 +122,7 @@ var collisionCoin = function()
     {
         reset();
         //coin is colliding
-        coinCount++;
+        coinCount_player1++;
     }
 
     if(getDistance(player2.x,player2.y,coin.x,coin.y)<player2.width)
@@ -269,21 +259,6 @@ function loop(){
         }
 
                     /* PLAYER 2 */
-
-    player2.draw();
-
-    /* Up Key */
-    if(keys[87]){                        //Press 'w' to jump
-        if(!player2.jumping){
-            player2.velY = -player2.jumpStrength*2;
-            player2.jumping = true;
-        }
-    }    
-    /* Right Key */
-    if(keys[68]){                        //Press 'd' move right
-    if(player2.velX < player2.speed){    //Cant increase velocity if reached max speed 
-        player2.velX++;
-        }
     }
     /* Left Key */    
     if(keys[65]){                        //Press 'a' to move left
@@ -315,36 +290,7 @@ function loop(){
         player2.velY = 0;
         }
     }
-    /* Left Key */    
-    if(keys[65]){                        //Press 'a' to move left
-    if(player2.velX > -player2.speed){   //Cant increase velocity if reached max speed 
-        player2.velX--;
-        }
-    }
-        
-    player2.x += player2.velX;
-    player2.y += player2.velY;
-
-    player2.velX *= resistance;          //Character can slow down 
-    player2.velY += weight;              //Control character jump height
-      
-    player2.grounded = false;
-    for(var i = 0; i < platforms.length; i++){
-        var direction = collisionCheck(player2,platforms[i]);
-
-       if (direction == "left" || direction == "right"){
-            player2.velX = 0;
-        } else if (direction == "bottom"){
-            player2.jumping = false;
-            player2.grounded = true;
-        } else if (direction == "top"){
-            player2.velY *= -1;
-            } 
-        }  
-    if(player2.grounded){
-        player2.velY = 0;
-        }
-    } 
+     
 
 
 /* Collision Detection  - platforms & chararacter */
