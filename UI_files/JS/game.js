@@ -7,6 +7,7 @@ var weight = 0.98;
 const SPRITE_SIZE = 16;
 var coinCount_player1 = 0;
 var coinCount_player2 = 0;
+var gameOver = false;
 
 var image = new Image();
 image.src = "sprites/alienPink.png";
@@ -31,6 +32,19 @@ function start_Game(){
         clearCanvas();
         loop();
     }, 1000/30)  // 30 frames per second
+}
+
+function end_game()
+{
+      // Display game over message when timer is over
+    gameOver= true;
+    clearCanvas();
+
+        context.font = "30px Impact";
+        context.fillStyle = "#FFFFFF";
+        context.textAlign = "center";
+        context.fillText("TIME IS UP! Thanks for playing~", canvas.width/2, canvas.height/2);
+ 
 }
 
 //Player 1
@@ -108,6 +122,15 @@ coin_image.onload = function ()
 coin_image.src = "images/coin.png";
 var coin = {};
 
+//clock
+var show_clock = false;
+var time_img = new Image(); 
+time_img.onload = function()
+{
+    show_clock = true;
+} // Draw when image has loaded
+time_img.src = 'images/time.gif';
+
 // Place the coin somewhere on the canvas randomly
 var reset = function ()
 {
@@ -152,27 +175,41 @@ var render = function()
         context.drawImage(coin_image, coin.x, coin.y);
     }
 
+    if(show_clock)
+    {
+         context.drawImage(time_img, 340, 5);
+
+    }
+
     context.fillStyle = "white"; //changes font color
-    context.font = "16px Helvetica";//changes font style
+    context.font = "24px Courier New";//changes font style
     context.textAlign = "left";//changes direction
     context.textBaseline = "top";//changes text placement
-    context.fillText("Coins by player 1: " + coinCount_player1 ,23, 30);
-    context.fillText("Coins by player 2: " + coinCount_player2 ,23, 50);
-    context.fillText("Time: " + time, 23, 70);//changes exact placement of the area
+    context.fillText(":"+ time, 390, 20);//changes exact placement of the area
+    context.fillText("P1: " + coinCount_player1 ,30, 20);
+    context.fillText("P2: " + coinCount_player2 ,730, 20);
 
-  // Display game over message when timer is over
-  if(gameOver==true)
-  {
-    context.font = "30px Impact";
-     context.textAlign = "center";
-    context.fillText("The game has ended", canvas.width/2, canvas.height/2);
-  }
-};
+    // context.fillStyle = "white"; //changes font color
+    // context.font = "16px Helvetica";//changes font style
+    // context.textAlign = "left";//changes direction
+    // context.textBaseline = "top";//changes text placement
+    // context.fillText("Coins by player 1: " + coinCount_player1 ,23, 30);
+    // context.fillText("Coins by player 2: " + coinCount_player2 ,23, 50);
+    // context.fillText("Time: " + time, 23, 70);//changes exact placement of the area
+
+//   // Display game over message when timer is over
+   if(gameOver==true)
+   {
+       end_game();       //     context.font = "30px Impact";
+//      context.textAlign = "center";
+//     context.fillText("The game has ended", canvas.width/2, canvas.height/2);
+   }
+ };
 
 //time
 var timeReady = false;
-var time = 180;
-var gameOver = false;
+var time = 120;
+
 var timer = function()
 {
     timeReady = true;
