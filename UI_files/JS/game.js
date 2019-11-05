@@ -21,6 +21,8 @@ function intro(){
    context.fillStyle = "#FFFFFF";
    context.textAlign = "center";
    context.fillText("Press Enter to Start", canvas.width/2, canvas.height/2);
+   context.fillText("Instructions", 250, 350);
+   context.fillText("Settings", 600, 350);
 }
 
 function start_Game(){
