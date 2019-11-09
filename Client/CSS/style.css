@@ -7,14 +7,14 @@ body{
     margin: 0px;
     padding: 0px;
     background: #456d59;
-    background-image: url(../images/spacebg.jpg);
+    background-image: url(../images/stars2.jpg);
     background-size:cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 #game{
-    background-image: url(../images/space.jpg);
+    background-image: url(../images/stars.gif);
     background-position: center center;
     position: absolute;
     top: 50%;
