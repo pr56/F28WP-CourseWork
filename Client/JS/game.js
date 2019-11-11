@@ -84,26 +84,7 @@ var player2 = {
     }
 }
 
-// intro();
 
-// function intro(){
-//    context.font = "30px Impact";
-//    context.fillStyle = "#FFFFFF";
-//    context.textAlign = "center";
-//    context.fillText("Press Enter to Start", canvas.width/2, canvas.height/2);
-//    context.fillText("Instructions", 250, 350);
-//    context.fillText("Settings", 600, 350);
-// }
-
-// function start_Game(){
-//     gameStarted = true;
-//     clearCanvas();
-
-//     setInterval(function(){
-//         clearCanvas();
-//         loop();
-//     }, 1000/30)  // 30 frames per second
-// }
 
 
 var Animation = function(frame_set, delay) {
@@ -212,13 +193,6 @@ var render = function()
     context.fillText("P1: " + coinCount_player1 ,30, 20);
     context.fillText("P2: " + coinCount_player2 ,730, 20);
 
-    // context.fillStyle = "white"; //changes font color
-    // context.font = "16px Helvetica";//changes font style
-    // context.textAlign = "left";//changes direction
-    // context.textBaseline = "top";//changes text placement
-    // context.fillText("Coins by player 1: " + coinCount_player1 ,23, 30);
-    // context.fillText("Coins by player 2: " + coinCount_player2 ,23, 50);
-    // context.fillText("Time: " + time, 23, 70);//changes exact placement of the area
 
 //   // Display game over message when timer is over
    if(gameOver==true)
