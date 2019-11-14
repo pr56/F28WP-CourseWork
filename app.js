@@ -23,3 +23,45 @@ socket.on('test',function(){
     
 });
 });
+
+const mysql = require('mysql');
+const connection = mysql.createConnection(
+{
+  host: 'localhost',
+  user: 'root',
+  password: ''
+});
+
+connection.connect(function(err)
+{
+    if (!err) 
+    console.log("connection successful");
+    connection.query("CREATE DATABASE scores", function (err) 
+    {
+        if(!err)
+        {
+             
+        console.log("Database Created");
+        }
+    });
+    
+    connection.query("USE scoreboard", function(err)
+    {
+        if(!err)
+        {
+            console.log("using scoreboard");
+        }
+
+    });
+
+    let table = "CREATE TABLE scores(name VARCHAR(100) , password VARCHAR(100), retype VARCHAR(100), score INT(100))";
+    connection.query(table , function (err)
+    {
+        if(!err)
+        {
+            console.log("table done");
+        }
+    });
+
+
+});
