@@ -472,14 +472,14 @@ var platform_height = 10;
 
 platforms.push({    //Push on to platform array
    x: canvas.width-170,
-   y: 40,
+   y: 80,
    width: platform_width,
    height: platform_height,
 });
 
   platforms.push({
     x: canvas.width-170,
-    y: canvas.height-50,
+    y: canvas.height-90,
     width: platform_width,
     height: platform_height,
  });
