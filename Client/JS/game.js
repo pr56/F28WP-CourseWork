@@ -44,7 +44,18 @@ function end_game()
         context.font = "30px Impact";
         context.fillStyle = "#FFFFFF";
         context.textAlign = "center";
-        context.fillText("TIME IS UP! Thanks for playing~", canvas.width/2, canvas.height/2);
+        if (coinCount_player1 > coinCount_player2)
+        {
+            context.fillText("TIME IS UP! Player 1 has won. Thanks for playing~", canvas.width/2, canvas.height/2);
+        }
+        else if (coinCount_player2 > coinCount_player1)
+        {
+            context.fillText("TIME IS UP!Player 2 has won. Thanks for playing~", canvas.width/2, canvas.height/2);
+        }
+        else
+        {
+        context.fillText("TIME IS UP! Both of you are in a tie. Thanks for playing~", canvas.width/2, canvas.height/2);
+        }
  
 }
 
@@ -87,13 +98,6 @@ var player2 = {
 
 
 
-var Animation = function(frame_set, delay) {
-    this.count = 0;// Counts the number of game cycles since the last frame change.
-    this.delay = delay;// The number of game cycles to wait until the next frame change.
-    this.frame = 0;// The value in the sprite sheet of the sprite image / tile to display.
-    this.frame_index = 0;// The frame's index in the current animation frame set.
-    this.frame_set = frame_set;// The current animation frame set that holds sprite tile values.
-  };
 
   //we are calculating for collision
 function getDistance(px,py,cx,cy)
@@ -112,7 +116,14 @@ function getDistance(p2x,p2y,cx,cy)
     return Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance,2));
 }
 
-//here i should add my sprite sheet
+function distance(p1x,p1y,p2x,p2y)
+{
+    let xDist = p2x-p1x;
+    let yDist = p2y-p1y;
+
+    return Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
+}
+
 
 //coin
 var show_coin = false;
@@ -159,9 +170,46 @@ var collisionCoin = function()
     }
 //coin is colliding
 
-
-
 };
+
+var collisionCharacter = function()
+{
+    var tp1X = player1.velX;
+    var tp2X = player2.velX
+    if((distance(player1.x,player1.y,player2.x,player2.y) < player1.width+1))
+    {
+        iscollision = true;
+
+
+        if ((player1.velX > player2.velX))
+        {
+            player1.velX = player1.velX - 5;
+            player2.velX = player2.velX + 5;
+        } else {
+            player1.velX = player1.velX + 5;
+            player2.velX = player2.velX - 5;
+        }
+
+        if ((player1.velY > player2.velY))
+        {
+            player1.velY = player1.velY - 5;
+            player2.velY = player2.velY + 5;
+        } else if((player1.velY < player2.velY))
+        {
+            player1.velY = player1.velY + 5;
+            player2.velX = player2.velX - 5;
+        }
+    }
+    else
+    {
+        iscollision = false;
+        player1.speed = 6;
+        player2.speed = 6;
+       
+    }
+    
+};
+
 function draw_platforms()
 {
     context.fillStyle = "#4A0336";
@@ -220,12 +268,14 @@ var timer = function()
 
     }
 }
-setInterval(timer,1000);
+
 
 
 function loop(){
     draw_platforms();
     player1.draw();
+    distance(player1.x,player1.y,player2.x,player2.y);
+    collisionCharacter();
 
     render();
      /*getDistance(player1.x,player1.y,coin.x,coin.y);*/
@@ -501,7 +551,7 @@ document.body.addEventListener("keydown", function(event){
       if(event.keyCode == 13 && !gameStarted){  //The Game will start when enter is pressed
             start_Game();
             timeReady = true;
-
+            setInterval(timer,1000);
       }
       keys[event.keyCode] = true;
 });

@@ -36,7 +36,7 @@ connection.connect(function(err)
 {
     if (!err) 
     console.log("connection successful");
-    connection.query("CREATE DATABASE scores", function (err) 
+    connection.query("CREATE DATABASE scoreboard", function (err) 
     {
         if(!err)
         {
