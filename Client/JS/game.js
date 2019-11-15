@@ -507,7 +507,36 @@ platforms.push({    //Push on to platform array
 
  platforms.push({
     x: canvas.width-760,
-    y: canvas.height-240,
+    y: canvas.height-230,
+    width: platform_width,
+    height: platform_height,
+ });
+
+
+ platforms.push({
+    x: canvas.width-600,
+    y: canvas.height-320,
+    width: platform_width,
+    height: platform_height,
+ });
+
+platforms.push({
+    x: canvas.width-700,
+    y: canvas.height-400,
+    width: platform_width,
+    height: platform_height,
+ });
+
+ platforms.push({
+    x: canvas.width-200,
+    y: canvas.height-290,
+    width: platform_width,
+    height: platform_height,
+ });
+
+ platforms.push({
+    x: canvas.width-750,
+    y: canvas.height-95,
     width: platform_width,
     height: platform_height,
  });
