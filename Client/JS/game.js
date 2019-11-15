@@ -14,6 +14,10 @@ image.src = "Client/sprites/alienPink.png";
 var image2 = new Image();
 image2.src = "Client/sprites/alienGreen.png";
 
+var coin_sound=document.getElementById('coin_sound_effect');
+var jump_sound=document.getElementById('jump_sound_effect');
+var collision_sound=document.getElementById('collision_sound_effect');
+
 intro();
 
 function intro(){
@@ -157,16 +161,32 @@ var collisionCoin = function()
 
     if(getDistance(player1.x,player1.y,coin.x,coin.y)<player1.width)
     {
+        var coin_flag_1=true;
         reset();
         //coin is colliding
         coinCount_player1++;
+        if(coin_flag_1)
+        {
+            coin_sound.pause();
+            coin_sound.currentTime=0;
+            coin_sound.play();
+            coin_flag_1=false;
+        }
     }
 
     if(getDistance(player2.x,player2.y,coin.x,coin.y)<player2.width)
     {
+        var coin_flag_2=true;
         reset();
         //coin is colliding
         coinCount_player2++;
+        if(coin_flag_2)
+        {
+            coin_sound.pause();
+            coin_sound.currentTime=0;
+            coin_sound.play();
+            coin_flag_2=false;
+        }
     }
 //coin is colliding
 
@@ -179,7 +199,15 @@ var collisionCharacter = function()
     if((distance(player1.x,player1.y,player2.x,player2.y) < player1.width+1))
     {
         iscollision = true;
-
+            
+	var collision_flag=true;
+        if(collision_flag)
+        {
+            collision_sound.pause();
+            collision_sound.currentTime=0;
+            collision_sound.play();
+            collision_flag=false;
+        }
 
         if ((player1.velX > player2.velX))
         {
@@ -286,8 +314,16 @@ function loop(){
      /* Up Key */
     if(keys[38]){
         if(!player1.jumping){
+            var jump_flag_1=true;
             player1.velY = -player1.jumpStrength*2;
             player1.jumping = true;
+            if(jump_flag_1)
+            {
+            jump_sound.pause();
+            jump_sound.currentTime=0;
+            jump_sound.play();
+            jump_flag_1=false;
+            }
         }
     }
     /* Right Key */
@@ -335,8 +371,16 @@ function loop(){
     /* Up Key */
     if(keys[87]){                        //Press 'w' to jump
         if(!player2.jumping){
+            var jump_flag_2=true;
             player2.velY = -player2.jumpStrength*2;
             player2.jumping = true;
+            if(jump_flag_2)
+            {
+            jump_sound.pause();
+            jump_sound.currentTime=0;
+            jump_sound.play();
+            jump_flag_2=false;
+            }
         }
     }
     /* Right Key */
