@@ -44,7 +44,7 @@ var connection = mysql.createConnection(
 
 
 serv.listen(2000);
-console.log("Server started on port 3000.");
+console.log("Server started on port 2000.");
 
 var io = require('socket.io')(serv,{});
 io.sockets.on('connection',function(socket){
