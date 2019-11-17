@@ -51,17 +51,48 @@ function end_game()
         context.textAlign = "center";
         if (coinCount_player1 > coinCount_player2)
         {
-            context.fillText("TIME IS UP! Player 1 has won. Thanks for playing~", canvas.width/2, canvas.height/2);
+            context.fillText("Congratulations! Player 1 won!", canvas.width/2, canvas.height/2);
+
+            context.font = "20px Impact";
+            context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
         }
         else if (coinCount_player2 > coinCount_player1)
         {
-            context.fillText("TIME IS UP!Player 2 has won. Thanks for playing~", canvas.width/2, canvas.height/2);
+            context.fillText("Congratulations! Player 2 won!", canvas.width/2, canvas.height/2);
+
+            context.font = "20px Impact";
+            context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
         }
         else
         {
         context.fillText("TIME IS UP! Both of you are in a tie. Thanks for playing~", canvas.width/2, canvas.height/2);
+
+        context.font = "20px Impact";
+        context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
         }
  
+}
+
+
+function replay(){
+player1.x = 10;
+player1.y = canvas.height -52;
+player1.grounded = true;
+player1.velY = 0;
+player1.velX = 0;
+coinCount_player1 = 0;
+
+player2.x = 100;
+player2.y = canvas.height -52;
+player2.grounded = true;
+player2.velY = 0;
+player2.velX = 0;
+gameOver = false;
+time = 60;
+coinCount_player2 = 0;
+
+
+requestAnimationFrame(loop)
 }
 
 //Player 1
@@ -271,18 +302,19 @@ var render = function()
     context.fillText("P2: " + coinCount_player2 ,730, 20);
 
 
-//   // Display game over message when timer is over
+    // Display game over message when timer is over
    if(gameOver==true)
    {
-       end_game();       //     context.font = "30px Impact";
-//      context.textAlign = "center";
-//     context.fillText("The game has ended", canvas.width/2, canvas.height/2);
+       end_game();      
+        //context.font = "30px Impact";
+        //context.textAlign = "center";
+        // context.fillText("The game has ended", canvas.width/2, canvas.height/2);
    }
  };
 
 //time
 var timeReady = false;
-var time = 120;
+var time = 60;
 
 var timer = function()
 {
@@ -635,6 +667,9 @@ document.body.addEventListener("keydown", function(event){
             timeReady = true;
             setInterval(timer,1000);
       }
+      if(event.keyCode == 13 && gameOver){  //The Game will start when enter is pressed
+        replay();
+  }
       keys[event.keyCode] = true;
 });
 
