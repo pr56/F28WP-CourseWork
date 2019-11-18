@@ -22,9 +22,37 @@ var connection = mysql.createConnection(
     });
 
     connection.connect(function(err){
-        if (!err) {throw err;}
+        if (err) {throw err;}
 
         console.log('Connected...');
+        connection.query("CREATE DATABASE scoreboard", function (err) 
+    {
+        if(!err)
+        {
+             
+        console.log("Database Created");
+        }
+    });
+    
+    connection.query("USE scoreboard", function(err)
+    {
+        if(!err)
+        {
+            console.log("Using scoreboard");
+        }
+
+    });
+
+    let table = "CREATE TABLE scores(name VARCHAR(100) , password VARCHAR(100), score INT(100))";
+    connection.query(table , function (err)
+    {
+        if(!err)
+        {
+            console.log("table done");
+        }
+    });
+
+    
     })
 
     app.post('/submit', function (req,res) {
