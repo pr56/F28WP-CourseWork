@@ -46,31 +46,22 @@ function end_game()
     gameOver= true;
     clearCanvas();
 
-        context.font = "30px Impact";
-        context.fillStyle = "#FFFFFF";
-        context.textAlign = "center";
-        if (coinCount_player1 > coinCount_player2)
-        {
-            context.fillText("Congratulations! Player 1 won!", canvas.width/2, canvas.height/2);
-
-            context.font = "20px Impact";
-            context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
+        if (coinCount_player1 > coinCount_player2) {
+            swal("Congratulations Player 1, You Won!", "Enter your name to save your score: " + coinCount_player1 + "!", "success" ,{
+                content: "input"
+              });
         }
-        else if (coinCount_player2 > coinCount_player1)
-        {
-            context.fillText("Congratulations! Player 2 won!", canvas.width/2, canvas.height/2);
-
-            context.font = "20px Impact";
-            context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
+        else if (coinCount_player2 > coinCount_player1){
+            swal("Congratulations Player 2, You Won!", "Enter your name to save your score: " + coinCount_player2 + "!", "success" ,{
+                content: "input"
+              });
         }
-        else
-        {
-        context.fillText("TIME IS UP! Both of you are in a tie. Thanks for playing~", canvas.width/2, canvas.height/2);
-
-        context.font = "20px Impact";
-        context.fillText("Press Enter to play again!", canvas.width/2, canvas.height/2 + 50);
+        else{
+            swal("It Was A DRAW", " Lets replay!");
         }
- 
+        
+        replay();
+        
 }
 
 
