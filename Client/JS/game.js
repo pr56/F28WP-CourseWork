@@ -26,8 +26,7 @@ function intro(){
    context.textAlign = "center";
    context.fillText("Space Chase",canvas.width/2, canvas.height/4);
    context.fillText("Press Enter to Start", canvas.width/2, canvas.height/2);
-   context.fillText("Instructions [I]", 250, 350);
-   context.fillText("Settings [S]", 600, 350);
+  
 }
 
 function start_Game(){
