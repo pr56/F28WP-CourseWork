@@ -663,15 +663,7 @@ document.body.addEventListener("keydown", function(event){
       keys[event.keyCode] = true;
 });
 
-document.body.addEventListener("keydown", function(event){  //Instructions will prompt
-    if(event.keyCode == 73)
-    alert(" \t\t\t\t\t Instructions \n\n This game is all about the chase to collect the maxium number of coins. \n \t\t Player 1 \t\t\t\t\t Player 2 \n Use up arrow to jump \t\t\t Use 'W' key to jump \n Use right arrow to move right \t\t Use 'W' key to move right \n Use left arrow to move left \t\t Use 'A' key to move left ");
-})
- 
-document.body.addEventListener("keydown", function(event){ //Setting tools will prompt
-    if(event.keyCode == 83)
-    alert("\t\t\t\t\t\t Settings \n\n Sound");
-})
+
 
 document.body.addEventListener("keyup", function(event){
     keys[event.keyCode] = false;
