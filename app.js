@@ -19,7 +19,7 @@ var connection = mysql.createConnection(
       user: 'root',
       password: '',
       database: 'scoreboard',
-      port: 2000
+    
     });
 
     connection.connect(function(err){
