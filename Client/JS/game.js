@@ -4,7 +4,6 @@ var gameStarted = false;   // Game hasn't started yet
 var keys = [];
 var resistance = 0.8;
 var weight = 0.98;
-const SPRITE_SIZE = 16;
 var coinCount_player1 = 0;
 var coinCount_player2 = 0;
 var gameOver = false;
