@@ -1,3 +1,4 @@
+//It sets up dependencies and the basic routing for the server.
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var gameStarted = false;   // Game hasn't started yet
@@ -8,6 +9,7 @@ var coinCount_player1 = 0;
 var coinCount_player2 = 0;
 var gameOver = false;
 
+//Provides the image of the two Aliens
 var image = new Image();
 image.src = "Client/sprites/alienPink.png";
 var image2 = new Image();
@@ -43,7 +45,8 @@ function end_game()
       // Display game over message when timer is over
     gameOver= true;
     clearCanvas();
-
+	
+        //Pop up message : which player won the game or if it is a draw
         if (coinCount_player1 > coinCount_player2) {
             swal("Congratulations Player 1, You Won!", "Enter your name to save your score: " + coinCount_player1 + "!", "success" ,{
                 content: "input"
@@ -83,10 +86,10 @@ coinCount_player2 = 0;
 
 requestAnimationFrame(loop)
 }
-
+//Creating the Aliens
 //Player 1
 var player1 = {
-    x: 10,
+    x: 400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
@@ -102,9 +105,9 @@ var player1 = {
     }
 }
 
-/* Player 2 */
+//Player 2 
 var player2 = {
-    x: 100,
+    x: 400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
@@ -124,7 +127,8 @@ var player2 = {
 
 
 
-  //we are calculating for collision
+
+ //We are calculating for the collision between the Aliens
 function getDistance(px,py,cx,cy)
 {
     let xDistance = cx-px;
@@ -150,7 +154,7 @@ function distance(p1x,p1y,p2x,p2y)
 }
 
 
-//coin
+// Creating the coin 
 var show_coin = false;
 var coin_image = new Image();
 coin_image.onload = function ()
@@ -162,7 +166,7 @@ coin_image.onload = function ()
 coin_image.src = "Client/images/coin.png";
 var coin = {};
 
-//clock
+//Creating the clock
 var show_clock = false;
 var time_img = new Image(); 
 time_img.onload = function()
@@ -171,7 +175,7 @@ time_img.onload = function()
 } // Draw when image has loaded
 time_img.src = 'Client/images/time.gif';
 
-// Place the coin somewhere on the canvas randomly
+//This function places the coin in the canvas randomly
 var reset = function ()
 {
     coin.x = 32 + (Math.random() * (canvas.width - 64));
@@ -209,7 +213,7 @@ var collisionCoin = function()
             coin_flag_2=false;
         }
     }
-//coin is colliding
+//Coin is colliding with the Alien
 
 };
 
@@ -295,13 +299,11 @@ var render = function()
    if(gameOver==true)
    {
        end_game();      
-        //context.font = "30px Impact";
-        //context.textAlign = "center";
-        // context.fillText("The game has ended", canvas.width/2, canvas.height/2);
+       
    }
  };
 
-//time
+//Time given to play the game is 60 seconds
 var timeReady = false;
 var time = 60;
 
@@ -350,13 +352,13 @@ function loop(){
     }
     /* Right Key */
     if(keys[39]){
-        if(player1.velX < player1.speed){  //Cant increase velocity if reached max speed
+        if(player1.velX < player1.speed){  //Can't increase velocity if reached max speed
             player1.velX++;
         }
     }
     /* Left Key */
     if(keys[37]){
-        if(player1.velX > -player1.speed){ //Cant increase velocity if reached max speed
+        if(player1.velX > -player1.speed){ //Can't increase velocity if reached max speed
             player1.velX--;
         }
     }
@@ -365,8 +367,8 @@ function loop(){
     player1.y += player1.velY;
 
 
-    player1.velX *= resistance;           // character can slow down
-    player1.velY += weight;               // control character jump height
+    player1.velX *= resistance;           // Character can slow down
+    player1.velY += weight;               // Controls the Alien's jump height
 
 
     player1.grounded = false;
