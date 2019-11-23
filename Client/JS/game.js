@@ -22,7 +22,7 @@ var collision_sound=document.getElementById('collision_sound_effect');
 intro();
 
 function intro(){
-   context.font = "30px Impact";
+   context.font = "35px Orbitron";
    context.fillStyle = "#FFFFFF";
    context.textAlign = "center";
    context.fillText("Space Chase",canvas.width/2, canvas.height/4);
