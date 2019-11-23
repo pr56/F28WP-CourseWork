@@ -17,40 +17,55 @@
      <script src="Client/JS/game.js"></script>
      <script src="/socket.io/socket.io.js"></script>
 
-     <!--Codes refered from W3School.com for Sign up form.
-     Reference: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form-->
-
      <button class="open-button" onclick="openForm()">Sign Up</button>
 
      <div class="form-popup" id="myForm">
-         <form action="/submit" class="form-container" method="POST"> 
-         <h1 style = "color: azure">Sign Up</h1>
-     
-         <label for="name" style = "color: azure"><b>Name</b></label>
-         <input type="text" placeholder="Enter Name" name="name" required>
-     
-         <label for="password" style = "color: azure"><b>Password</b></label>
-         <input type="password" placeholder="Enter Password" name="password" required>
          
-         <label for="retype" style = "color: azure"><b>Repeat Password</b></label>
-         <input type="password" placeholder="Repeat Password" name="retype" required>
-     
-         <button type="submit" class="btn">Signs Up</button>
-         <button type="button" class="btn cancel" onclick="closeForm()"> Close</button>
-         </form>
+            Username: <input id="signDiv-username" type="text"></input><br>
+            Password : <input id="signDiv-password" type="password"></input>
+            <button id="signDiv-signIn">Sign In</button>
+            <button id="signDiv-signUp">Sign Up</button>
          </div>
                                         
     <script> 
-   var socket = io();
-    socket.emit('test');
-
-    function openForm() {
+       var socket = io();
+       var random = Math.random();
+       socket.emit('user', {
+       reason:' #'  + random
+        });
+     
+     //sign in
+    var signDiv = document.getElementById('myForm');
+    var signDivUsername = document.getElementById('signDiv-username');
+    var signDivSignIn = document.getElementById('signDiv-signIn');
+    var signDivSignUp = document.getElementById('signDiv-signUp');
+    var signDivPassword = document.getElementById('signDiv-password');
+   
+    signDivSignIn.onclick = function(){
+        socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
+    }
+    signDivSignUp.onclick = function(){
+        socket.emit('signUp',{username:signDivUsername.value,password:signDivPassword.value});
+    }
+    socket.on('signInResponse',function(data){
+        if(data.success){
+            swal("Success", "You have signed in",'success');
+        } else
+           swal ("Ooops...", " Please enter your correct username and password or sign up ",'error');
+    });
+    socket.on('signUpResponse',function(data){
+        if(data.success){
+            swal("Success", "You have signed up",'success');
+        } else{
+            swal("Ooops...", "Please enter your name and password to sign up",'error');
+        }
+        
+    });
+        
+        function openForm() {
     document.getElementById("myForm").style.display = "block";
      }
 
-    function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-     }
 
     </script>  
 
