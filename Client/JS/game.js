@@ -4,7 +4,6 @@ var gameStarted = false;   // Game hasn't started yet
 var keys = [];
 var resistance = 0.8;
 var weight = 0.98;
-const SPRITE_SIZE = 16;
 var coinCount_player1 = 0;
 var coinCount_player2 = 0;
 var gameOver = false;
@@ -21,7 +20,7 @@ var collision_sound=document.getElementById('collision_sound_effect');
 intro();
 
 function intro(){
-   context.font = "30px Impact";
+   context.font = "35px Orbitron";
    context.fillStyle = "#FFFFFF";
    context.textAlign = "center";
    context.fillText("Space Chase",canvas.width/2, canvas.height/4);
@@ -86,7 +85,7 @@ requestAnimationFrame(loop)
 
 //Player 1
 var player1 = {
-    x: 10,
+    x:  400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
@@ -104,7 +103,7 @@ var player1 = {
 
 /* Player 2 */
 var player2 = {
-    x: 100,
+    x:  400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
