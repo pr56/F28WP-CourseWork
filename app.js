@@ -5,7 +5,7 @@ db.createCollection("scores");
 */
 
 var mongojs = require("mongojs");
-var db = mongojs('localhost:27017/myPlayers', ['account', 'scores']);
+var db = mongojs('46.101.126.219:27017/myPlayers', ['account', 'scores']);
 
 var express = require('express');
 var app = express();
@@ -18,7 +18,7 @@ app.get('/', function(req,res){
 
 app.use('/Client', express.static(__dirname + '/Client'));
 
-serv.listen(2020);
+serv.listen(process.env.PORT || 2020);
 console.log("Server started on port 2020.");
 
 var isValidPassword = function(data,cb){
