@@ -1,88 +1,80 @@
+/*
+use myPlayers
+db.createCollection("account");
+db.createCollection("scores");
+*/
+
+var mongojs = require("mongojs");
+var db = mongojs('46.101.126.219:27017/myPlayers', ['account', 'scores']);
 
 var express = require('express');
-var mysql =require("mysql");
-var bodyParser = require('body-parser');
 var app = express();
 var serv = require('http').Server(app);
 
+
+app.get('/', function(req,res){
+    res.sendFile(__dirname + '/Client/Index.html');
+});
+
 app.use('/Client', express.static(__dirname + '/Client'));
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.set('view engin')
-app.get('/', function(req,res){
-    res.sendFile('/Client/Index.html',
-    { root: __dirname }) 
-});
-var connection = mysql.createConnection(
-    {
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'scoreboard',
-    
+serv.listen(process.env.PORT || 2020);
+console.log("Server started on port 2020.");
+
+var isValidPassword = function(data,cb){
+    db.account.find({username:data.username,password:data.password},function(err,res){
+        if(res.length > 0)
+            cb(true);
+        else
+            cb(false);
     });
+}
 
-    connection.connect(function(err){
-        if (err) {throw err;}
-
-        console.log('Connected...');
-        connection.query("CREATE DATABASE scoreboard", function (err) 
-    {
-        if(!err)
-        {
-             
-        console.log("Database Created");
-        }
+var isUsernameTaken = function(data,cb){
+    db.account.find({username:data.username},function(err,res){
+        if(res.length > 0)
+            cb(true);
+        else
+            cb(false);
     });
-    
-    connection.query("USE scoreboard", function(err)
-    {
-        if(!err)
-        {
-            console.log("Using scoreboard");
-        }
+}
 
+var addUser = function(data,cb){
+    db.account.insert({username:data.username,password:data.password},function(err){
+        cb();
     });
-
-    let table = "CREATE TABLE scores(name VARCHAR(100) , password VARCHAR(100), score INT(100))";
-    connection.query(table , function (err)
-    {
-        if(!err)
-        {
-            console.log("table done");
-        }
-    });
-
-    
-    })
-
-    app.post('/submit', function (req,res) {
-        console.log("helloo");
-         console.log(req.body.name);
-         //console.log(req.body)
-    
-         var sql = "insert into scores values("+ "'"+ req.body.name +"', '"+ req.body.password + "' )"
-         connection.query(sql,function (err){
-             if (err) throw err
-           res.sendFile('Client/JS/game.js',{ root: __dirname }) // HERE U have to think how u would invoke the game 
-           connection.end();
-        });
-
-
-});
-
-
-serv.listen(2000);
-console.log("Server started on port 2000.");
+}
 
 var io = require('socket.io')(serv,{});
-io.sockets.on('connection',function(socket){
-    
-console.log('socket connection');
-    
-socket.on('test',function(){
-    console.log('test');
-    
-    
+io.sockets.on('connection', function(socket){
+ console.log('socket connection');
+ socket.on('user', function(data){
+     console.log('user ID' + data.reason);
+ });
+
+ socket.on('signIn',function(data){
+    isValidPassword(data,function(res){
+        if(res){
+            socket.emit('signInResponse',{success:true});
+        } else {
+            socket.emit('signInResponse',{success:false});         
+        }
+    });
 });
+
+
+
+socket.on('signUp',function(data){
+    isUsernameTaken(data,function(res){
+        if(res){
+        socket.emit('signUpResponse', {success: false});
+    }else{
+        addUser(data,function(){
+            socket.emit('signUpResponse',{success:true}); 
+    }); 
+   } 
+ });
+
+});
+
 });

@@ -4,7 +4,6 @@ var gameStarted = false;   // Game hasn't started yet
 var keys = [];
 var resistance = 0.8;
 var weight = 0.98;
-const SPRITE_SIZE = 16;
 var coinCount_player1 = 0;
 var coinCount_player2 = 0;
 var gameOver = false;
@@ -21,7 +20,7 @@ var collision_sound=document.getElementById('collision_sound_effect');
 intro();
 
 function intro(){
-   context.font = "30px Impact";
+   context.font = "35px Orbitron";
    context.fillStyle = "#FFFFFF";
    context.textAlign = "center";
    context.fillText("Space Chase",canvas.width/2, canvas.height/4);
@@ -39,24 +38,23 @@ function start_Game(){
     }, 1000/30)  // 30 frames per second
 }
 
+
+
 function end_game()
 {
       // Display game over message when timer is over
     gameOver= true;
     clearCanvas();
+    
 
         if (coinCount_player1 > coinCount_player2) {
-            swal("Congratulations Player 1, You Won!", "Enter your name to save your score: " + coinCount_player1 + "!", "success" ,{
-                content: "input"
-              });
+            swal("Congratulations Player 1, You Won! 🎉", " Your score is: " + coinCount_player1 + "!", "success")
         }
         else if (coinCount_player2 > coinCount_player1){
-            swal("Congratulations Player 2, You Won!", "Enter your name to save your score: " + coinCount_player2 + "!", "success" ,{
-                content: "input"
-              });
-        }
+            swal("Congratulations Player 2, You Won! 🎉", " Your score is: " + coinCount_player2 + "!", "success")
+        }        
         else{
-            swal("It Was A DRAW", " Lets replay!");
+            swal("It was a DRAW", " Lets replay ⚔️!");
         }
         
         replay();
@@ -87,7 +85,7 @@ requestAnimationFrame(loop)
 
 //Player 1
 var player1 = {
-    x: 10,
+    x:  400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
@@ -105,7 +103,7 @@ var player1 = {
 
 /* Player 2 */
 var player2 = {
-    x: 100,
+    x:  400,
     y: canvas.height -52,   // Positioned at bottom of screen
     width: 35,
     height: 47,
@@ -120,9 +118,6 @@ var player2 = {
         context.drawImage(image2, 0, 0, 35, 48, this.x, this.y, 35, 48)
     }
 }
-
-
-
 
 
   //we are calculating for collision
@@ -304,7 +299,7 @@ var render = function()
 
 //time
 var timeReady = false;
-var time = 60;
+var time =60;
 
 var timer = function()
 {
